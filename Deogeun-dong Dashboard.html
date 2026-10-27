@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>덕은동 아파트 실거래가 - Deogeun-dong Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Header Section -->
+        <header class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">덕은동 아파트 실거래가</h1>
+                <p class="text-sm text-slate-500 mt-1">덕은지구 실시간 부동산 및 지역 정보 대시보드</p>
+            </div>
+            <div class="text-sm text-slate-400 font-medium">
+                업데이트: <span id="current-date"></span>
+            </div>
+        </header>
+
+        <!-- Top Status Bar / Widgets -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <!-- Weather Widget -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4 transition hover:shadow-md">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-slate-500 font-medium">현재 날씨</p>
+                    <p class="text-lg font-bold text-slate-800">24.0℃ <span class="text-base font-normal ml-1">맑음</span></p>
+                </div>
+            </div>
+
+            <!-- Fine Dust Widget -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4 transition hover:shadow-md">
+                <div class="w-12 h-12 rounded-full bg-green-50 text-green-500 flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-slate-500 font-medium">미세먼지 (고양시)</p>
+                    <p class="text-lg font-bold text-green-600">보통 <span class="text-sm font-normal text-slate-400 ml-1">45µg/m³</span></p>
+                </div>
+            </div>
+
+            <!-- Public Bikes Widget -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4 transition hover:shadow-md">
+                <div class="w-12 h-12 rounded-full bg-teal-50 text-teal-500 flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-bicycle"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-slate-500 font-medium">공공자전거 (타조/따릉이)</p>
+                    <p class="text-lg font-bold text-slate-800">대여소 15곳 <span class="text-sm font-normal text-teal-600 ml-1">원활</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weekly Summary Section -->
+        <section class="mb-10">
+            <h2 class="text-lg font-bold text-slate-800 mb-4">이번 주 거래 요약</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm text-center">
+                    <p class="text-sm text-slate-500 mb-1">매매</p>
+                    <p class="text-2xl font-bold text-rose-500">3<span class="text-sm font-normal text-slate-600 ml-1">건</span></p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm text-center">
+                    <p class="text-sm text-slate-500 mb-1">전세</p>
+                    <p class="text-2xl font-bold text-blue-500">12<span class="text-sm font-normal text-slate-600 ml-1">건</span></p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm text-center">
+                    <p class="text-sm text-slate-500 mb-1">월세</p>
+                    <p class="text-2xl font-bold text-emerald-500">5<span class="text-sm font-normal text-slate-600 ml-1">건</span></p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm text-center bg-slate-800 text-white">
+                    <p class="text-sm text-slate-300 mb-1">최고가 갱신</p>
+                    <p class="text-2xl font-bold text-yellow-400">1<span class="text-sm font-normal text-slate-300 ml-1">건</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Transactions Section -->
+        <section>
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-slate-800">최근 실거래 내역</h2>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 text-sm font-medium rounded-full bg-slate-800 text-white" onclick="filterTransactions('all')">전체</button>
+                    <button class="px-3 py-1 text-sm font-medium rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" onclick="filterTransactions('매매')">매매</button>
+                    <button class="px-3 py-1 text-sm font-medium rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" onclick="filterTransactions('전세')">전세</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-sm">
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">계약일</th>
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">단지명</th>
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">전용면적</th>
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">유형</th>
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">거래금액</th>
+                                <th class="py-3 px-4 font-medium whitespace-nowrap">층</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-list" class="divide-y divide-slate-100 text-sm text-slate-700">
+                            <!-- Transactions will be injected here via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-4 text-center border-t border-slate-100">
+                    <button class="text-sm text-blue-500 hover:text-blue-700 font-medium">더보기 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-slate-400 text-xs">
+            <p>본 데이터는 국토교통부 실거래가 공개시스템을 기반으로 작성된 예시 데이터입니다.</p>
+            <p class="mt-1">&copy; 2026 Deogeun-dong Real Estate Dashboard. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript to populate dummy data and handle logic -->
+    <script>
+        // Set current date
+        const today = new Date();
+        document.getElementById('current-date').textContent = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+        // Placeholder Transaction Data for Deogeun-dong
+        const transactions = [
+            { date: '10.26', name: 'DMC 리버파크자이', size: '84.98㎡', type: '매매', price: '11억 8,000', floor: '14층', typeClass: 'text-rose-600 bg-rose-50 border-rose-200' },
+            { date: '10.25', name: 'DMC 리버시티자이', size: '84.96㎡', type: '전세', price: '6억 5,000', floor: '8층', typeClass: 'text-blue-600 bg-blue-50 border-blue-200' },
+            { date: '10.24', name: 'DMC 디에트르한강', size: '84.99㎡', type: '월세', price: '1억 / 160', floor: '21층', typeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+            { date: '10.22', name: 'DMC 한강에일린의뜰', size: '106.32㎡', type: '매매', price: '14억 5,000', floor: '19층', typeClass: 'text-rose-600 bg-rose-50 border-rose-200', isHigh: true },
+            { date: '10.20', name: 'DMC 리버파크자이', size: '84.98㎡', type: '전세', price: '6억 3,000', floor: '5층', typeClass: 'text-blue-600 bg-blue-50 border-blue-200' },
+            { date: '10.18', name: 'DMC 리버시티자이', size: '84.96㎡', type: '매매', price: '11억 3,000', floor: '12층', typeClass: 'text-rose-600 bg-rose-50 border-rose-200' },
+            { date: '10.15', name: 'DMC 디에트르한강', size: '84.99㎡', type: '전세', price: '6억 8,000', floor: '15층', typeClass: 'text-blue-600 bg-blue-50 border-blue-200' }
+        ];
+
+        const tbody = document.getElementById('transaction-list');
+
+        function renderTable(data) {
+            tbody.innerHTML = '';
+            data.forEach(tx => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-50 transition-colors duration-150';
+                
+                // High price badge logic
+                const highBadge = tx.isHigh ? `<span class="ml-2 inline-flex items-center rounded-md bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">최고가</span>` : '';
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 whitespace-nowrap text-slate-500">${tx.date}</td>
+                    <td class="py-3 px-4 font-medium text-slate-800">${tx.name}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${tx.size}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-semibold rounded border ${tx.typeClass}">${tx.type}</span>
+                    </td>
+                    <td class="py-3 px-4 font-bold text-slate-800 whitespace-nowrap">${tx.price} ${highBadge}</td>
+                    <td class="py-3 px-4 whitespace-nowrap text-slate-500">${tx.floor}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initial render
+        renderTable(transactions);
+
+        // Simple filtering logic
+        function filterTransactions(type) {
+            // Update button styles
+            const buttons = document.querySelectorAll('button[onclick^="filterTransactions"]');
+            buttons.forEach(btn => {
+                if(btn.innerText === type || (type === 'all' && btn.innerText === '전체')) {
+                    btn.classList.add('bg-slate-800', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-50');
+                } else {
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-50');
+                }
+            });
+
+            // Filter data
+            if (type === 'all') {
+                renderTable(transactions);
+            } else {
+                const filtered = transactions.filter(tx => tx.type === type);
+                renderTable(filtered);
+            }
+        }
+    </script>
+</body>
+</html>
